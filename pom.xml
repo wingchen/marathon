@@ -19,7 +19,7 @@
         <protobuf.version>2.4.1</protobuf.version>
         <akka.version>2.2.3</akka.version>
         <spray.version>1.2-RC4</spray.version>
-        <json4s.version>3.2.5</json4s.version>
+        <json4s.version>3.2.7</json4s.version>
         <twitter-commons.version>0.0.52</twitter-commons.version>
 
         <!-- test deps versions -->
