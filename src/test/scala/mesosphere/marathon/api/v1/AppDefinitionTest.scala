@@ -2,12 +2,16 @@ package mesosphere.marathon.api.v1
 
 import org.junit.Test
 import org.junit.Assert._
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.google.common.collect.Lists
 import scala.collection.JavaConverters._
+import mesosphere.marathon.api.v2.json.MarathonModule
 import mesosphere.marathon.Protos.ServiceDefinition
 import mesosphere.marathon.state.Timestamp
 import org.apache.mesos.Protos.CommandInfo
 import javax.validation.Validation
+
 
 /**
  * @author Tobi Knaup
@@ -62,7 +66,12 @@ class AppDefinitionTest {
   def testValidation() {
     val validator = Validation.buildDefaultValidatorFactory().getValidator
 
-    def should(assertion: (Boolean) => Unit, app: AppDefinition, path: String, template: String) = {
+    def should(
+      assertion: (Boolean) => Unit,
+      app: AppDefinition,
+      path: String,
+      template: String
+    ) = {
       val violations = validator.validate(app).asScala
       assertion(violations.exists(v =>
         v.getPropertyPath.toString == path && v.getMessageTemplate == template))
@@ -101,6 +110,40 @@ class AppDefinitionTest {
       "Elements must be unique"
     )
 
+  }
+
+  @Test
+  def testDefaultValues() {
+    val mapper = new ObjectMapper
+    mapper.registerModule(DefaultScalaModule)
+    mapper.registerModule(new MarathonModule)
+
+    val json = """{ "id": "myApp" }"""
+
+    for (i <- 0 until 3) {
+      println("AppDefinition [%s]" format i)
+      val readResult = mapper.readValue(json, classOf[AppDefinition])
+      assertTrue(readResult.id == "myApp")
+      assertTrue(readResult.taskRateLimit == AppDefinition.DEFAULT_TASK_RATE_LIMIT)
+      assertTrue(Option(readResult.version).isDefined)
+    }
+  }
+
+  @Test
+  def minifiedAppDefinitionDeserialization() {
+    val mapper = new ObjectMapper
+    mapper.registerModule(DefaultScalaModule)
+    mapper.registerModule(new MarathonModule)
+
+    val json = """{ "id": "myApp" }"""
+
+    for (i <- 0 until 3) {
+      println("AppDefinition2 [%s]" format i)
+      val readResult = mapper.readValue(json, classOf[AppDefinitionMin])
+      assert(readResult.id == "myApp")
+      assert(readResult.taskRateLimit == AppDefinition.DEFAULT_TASK_RATE_LIMIT)
+      assert(Option(readResult.version).isDefined)
+    }
   }
 
   @Test
