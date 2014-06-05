@@ -82,7 +82,8 @@ object Dependencies {
 
     // test
     Test.scalatest % "test",
-    Test.mockito % "test"
+    Test.mockito % "test",
+    Test.akkaTestKit % "test"
   )
 }
 
@@ -125,6 +126,7 @@ object Dependency {
   object Test {
     val scalatest = "org.scalatest" %% "scalatest" % V.ScalaTest
     val mockito = "org.mockito" % "mockito-all" % V.Mockito
+    val akkaTestKit = "com.typesafe.akka" %% "akka-testkit" % V.Akka
   }
 }
 
