@@ -16,7 +16,7 @@ class MarathonStore[S <: MarathonState[_, S]](state: State,
   import ThreadPoolContext.context
   import BackToTheFuture.futureToFutureOption
 
-  private [this] val locks = LockManager()
+  private[this] val locks = LockManager()
 
   def fetch(key: String): Future[Option[S]] = {
     state.fetch(prefix + key) map {
