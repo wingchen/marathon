@@ -87,6 +87,7 @@ object Dependencies {
     jodaTime % "compile",
     jodaConvert % "compile",
     jerseyServlet % "compile",
+    jGraphT % "compile",
 
     // test
     Test.scalatest % "test",
@@ -110,6 +111,7 @@ object Dependency {
     val Jersey = "1.18.1"
     val JodaTime = "2.3"
     val JodaConvert = "1.5"
+    val JGraphT = "0.9.1"
 
     // test deps versions
     val Mockito = "1.9.5"
@@ -130,6 +132,7 @@ object Dependency {
   val mesos = "org.apache.mesos" % "mesos" % V.Mesos
   val twitterCommons = "com.twitter.common.zookeeper" % "candidate" % V.TwitterCommons
   val twitterZkClient = "com.twitter.common.zookeeper" % "client" % V.TwitterZkCLient
+  val jGraphT = "org.javabits.jgrapht" % "jgrapht-core" % V.JGraphT
 
   object Test {
     val scalatest = "org.scalatest" %% "scalatest" % V.ScalaTest
