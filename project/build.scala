@@ -24,6 +24,7 @@ object MarathonBuild extends Build {
     scalacOptions in Compile ++= Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint"),
     javacOptions in Compile ++= Seq("-encoding", "UTF-8", "-source", "1.6", "-target", "1.6", "-Xlint:unchecked", "-Xlint:deprecation"),
     resolvers ++= Seq(
+      "Local Maven Repository" at "file:///"+Path.userHome+"/.m2/repository",
       "Mesosphere Public Repo" at "http://downloads.mesosphere.io/maven",
       "Twitter Maven2 Repository" at "http://maven.twttr.com/",
       "Spray Maven Repository" at "http://repo.spray.io/"
@@ -93,7 +94,7 @@ object Dependency {
     val Chaos = "0.5.6"
     val JacksonCCM = "0.1.0"
     val Mesos = "0.19.0"
-    val MesosUtils = "0.18.2-2"
+    val MesosUtils = "0.19-0-1"
     val Akka = "2.2.4"
     val Spray = "1.2.1"
     val Json4s = "3.2.5"

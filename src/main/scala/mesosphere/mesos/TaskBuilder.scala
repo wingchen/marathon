@@ -93,6 +93,7 @@ class TaskBuilder(app: AppDefinition,
   private def offerMatches(offer: Offer): Option[(String, String)] = {
     var cpuRole = ""
     var memRole = ""
+    var diskRole = ""
 
     for (resource <- offer.getResourcesList.asScala) {
       if (cpuRole.isEmpty &&
@@ -105,7 +106,11 @@ class TaskBuilder(app: AppDefinition,
         resource.getScalar.getValue >= app.mem) {
         memRole = resource.getRole
       }
-      // TODO handle other resources
+      if (diskRole.isEmpty &&
+        resource.getName == Resource.DISK &&
+        resource.getScalar.getValue >= app.disk) {
+        diskRole = resource.getRole
+      }
     }
 
     if (cpuRole.isEmpty || memRole.isEmpty) {

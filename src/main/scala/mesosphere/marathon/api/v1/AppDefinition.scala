@@ -34,6 +34,8 @@ case class AppDefinition(
 
   mem: JDouble = AppDefinition.DEFAULT_MEM,
 
+  disk: JDouble = AppDefinition.DEFAULT_DISK,
+
   @FieldPattern(regexp = "^(//cmd)|(/?[^/]+(/[^/]+)*)|$") executor: String = "",
 
   constraints: Set[Constraint] = Set(),
@@ -116,6 +118,7 @@ case class AppDefinition(
       constraints = proto.getConstraintsList.asScala.toSet,
       cpus = resourcesMap.get(Resource.CPUS).getOrElse(this.cpus),
       mem = resourcesMap.get(Resource.MEM).getOrElse(this.mem),
+      disk = resourcesMap.get(Resource.DISK).getOrElse(this.disk),
       env = envMap,
       uris = proto.getCmd.getUrisList.asScala.map(_.getValue),
       container = if (proto.getCmd.hasContainer) {
@@ -150,6 +153,7 @@ case class AppDefinition(
 object AppDefinition {
   val DEFAULT_CPUS = 1.0
   val DEFAULT_MEM = 128.0
+  val DEFAULT_DISK = 8.0
 
   val RANDOM_PORT_VALUE = 0
   val DEFAULT_PORTS: Seq[JInt] = Seq(RANDOM_PORT_VALUE)
@@ -161,7 +165,7 @@ object AppDefinition {
   protected[marathon] class WithTaskCounts(
     taskTracker: TaskTracker,
     app: AppDefinition) extends AppDefinition(
-    app.id, app.cmd, app.env, app.instances, app.cpus, app.mem, app.executor,
+    app.id, app.cmd, app.env, app.instances, app.cpus, app.mem, app.disk, app.executor,
     app.constraints, app.uris, app.ports, app.taskRateLimit, app.container,
     app.healthChecks, app.version
   ) {
