@@ -112,11 +112,11 @@ object Dependency {
 
   val akkaActor = "com.typesafe.akka" %% "akka-actor" % V.Akka
   val akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % V.Akka
-  val sprayClient = "io.spray" % "spray-client" % V.Spray
+  val sprayClient = "io.spray" % "spray-client" % V. Spray
   val sprayHttpx = "io.spray" % "spray-httpx" % V.Spray
   val json4s = "org.json4s" %% "json4s-jackson" % V.Json4s
   val chaos = "mesosphere" % "chaos" % V.Chaos
-  val mesosUtils = "mesosphere" % "mesos-utils" % V.MesosUtils
+  val mesosUtils = "mesosphere" %% "mesos-utils" % V.MesosUtils
   val jacksonCaseClass = "mesosphere" %% "jackson-case-class-module" % V.JacksonCCM
   val jerseyServlet =  "com.sun.jersey" % "jersey-servlet" % V.Jersey
   val jodaTime = "joda-time" % "joda-time" % V.JodaTime
