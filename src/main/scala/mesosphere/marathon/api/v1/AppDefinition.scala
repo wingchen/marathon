@@ -153,7 +153,7 @@ case class AppDefinition(
 object AppDefinition {
   val DEFAULT_CPUS = 1.0
   val DEFAULT_MEM = 128.0
-  val DEFAULT_DISK = 8.0
+  val DEFAULT_DISK = 1.0
 
   val RANDOM_PORT_VALUE = 0
   val DEFAULT_PORTS: Seq[JInt] = Seq(RANDOM_PORT_VALUE)

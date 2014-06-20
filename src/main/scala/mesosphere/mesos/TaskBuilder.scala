@@ -31,13 +31,15 @@ class TaskBuilder(app: AppDefinition,
   def buildIfMatches(offer: Offer): Option[(TaskInfo, Seq[Long])] = {
     var cpuRole = ""
     var memRole = ""
+    var diskRole = ""
 
     offerMatches(offer) match {
-      case Some((cpu, mem)) =>
+      case Some((cpu, mem, disk)) =>
         cpuRole = cpu
         memRole = mem
+        diskRole = disk
       case _ =>
-        log.info(s"No matching offer for ${app.id} (need ${app.cpus} CPUs, ${app.mem} mem, ${app.ports.size} ports) : " + offer)
+        log.info(s"No matching offer for ${app.id} (need ${app.cpus} CPUs, ${app.mem} mem, ${app.disk} disk, ${app.ports.size} ports) : " + offer)
         return None
     }
 
@@ -90,7 +92,7 @@ class TaskBuilder(app: AppDefinition,
     }
   }
 
-  private def offerMatches(offer: Offer): Option[(String, String)] = {
+  private def offerMatches(offer: Offer): Option[(String, String, String)] = {
     var cpuRole = ""
     var memRole = ""
     var diskRole = ""
@@ -113,7 +115,7 @@ class TaskBuilder(app: AppDefinition,
       }
     }
 
-    if (cpuRole.isEmpty || memRole.isEmpty) {
+    if (cpuRole.isEmpty || memRole.isEmpty || diskRole.isEmpty) {
       return None
     }
 
@@ -128,7 +130,7 @@ class TaskBuilder(app: AppDefinition,
       }
       log.info("Met all constraints.")
     }
-    Some((cpuRole, memRole))
+    Some((cpuRole, memRole, diskRole))
   }
 }
 

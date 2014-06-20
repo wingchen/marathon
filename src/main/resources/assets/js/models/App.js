@@ -11,7 +11,7 @@ define([
 
   var DEFAULT_HEALTH_MSG = "Unknown";
   var EDITABLE_ATTRIBUTES = ["cmd", "constraints", "container", "cpus", "env",
-    "executor", "id", "instances", "mem", "ports", "uris"];
+    "executor", "id", "instances", "mem", "disk", "ports", "uris"];
   var VALID_ID_PATTERN = "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$";
   var VALID_ID_REGEX = new RegExp(VALID_ID_PATTERN);
 
@@ -27,7 +27,7 @@ define([
             " returned with status: '" + hc.lastFailureCause + "'" :
             " failed") +
           ".";
-      }
+      }`
     }, context);
   }
 
@@ -44,6 +44,7 @@ define([
         id: _.uniqueId("app-"),
         instances: 1,
         mem: 16.0,
+        disk: 1.0,
         ports: [0],
         uris: []
       };
@@ -144,6 +145,11 @@ define([
       if (_.isNaN(attrs.cpus) || !_.isNumber(attrs.cpus) || attrs.cpus < 0) {
         errors.push(
           new ValidationError("cpus", "CPUs must be a non-negative Number"));
+      }
+
+      if (_.isNaN(attrs.disk) || !_.isNumber(attrs.disk) || attrs.disk < 0) {
+        errors.push(
+          new ValidationError("disk", "Disk Space must be a non-negative Number"));
       }
 
       if (_.isNaN(attrs.instances) || !_.isNumber(attrs.instances) ||
