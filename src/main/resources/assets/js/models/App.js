@@ -27,7 +27,7 @@ define([
             " returned with status: '" + hc.lastFailureCause + "'" :
             " failed") +
           ".";
-      }`
+      }
     }, context);
   }
 
