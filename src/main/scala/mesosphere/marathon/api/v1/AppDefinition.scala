@@ -80,6 +80,7 @@ case class AppDefinition(
     val commandInfo = TaskBuilder.commandInfo(this, Seq())
     val cpusResource = ScalarResource(Resource.CPUS, cpus)
     val memResource = ScalarResource(Resource.MEM, mem)
+    val diskResource = ScalarResource(Resource.DISK, disk)
 
     val builder = Protos.ServiceDefinition.newBuilder
       .setId(id)
@@ -91,6 +92,7 @@ case class AppDefinition(
       .addAllConstraints(constraints.asJava)
       .addResources(cpusResource)
       .addResources(memResource)
+      .addResources(diskResource)
       .addAllHealthChecks(healthChecks.map(_.toProto).asJava)
       .setVersion(version.toString)
 
